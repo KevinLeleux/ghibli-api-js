@@ -11,11 +11,10 @@
     
 }
 .card {
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     margin: 1em;
-    min-width: 300px;
-    max-width: 300px;
-    height: 450px;
+    min-width: 20em;
+    height: 30em;
     background-repeat: no-repeat;
     background-size: cover;
 
@@ -24,4 +23,9 @@
 p, h1, h4 {
     padding: 10px;
     text-align: center;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }

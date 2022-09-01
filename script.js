@@ -18,24 +18,32 @@ async function fetchTitles() {
     data.forEach(createCard);
 }
 
+async function fetchTitleById(id){
+    const rep = await fetch(`${URL}/${id}`);
+    const response = await rep.json();
+    description(response)
+}
 function createCard(data) {
+    const link = document.createElement('a');
+    link.setAttribute('href', "?id="+data.id);
+    //link.insertAdjacentText('beforeend', data.title);
+
     const card = document.createElement('div')
     card.setAttribute('class', 'card')
     card.setAttribute('style', `background-image: url(${data.image})`);
-    card.setAttribute('id', data.id)
     
-    const newlink = document.createElement('a');
-    newlink.setAttribute('href', "?id="+data.id);
-    newlink.insertAdjacentText('beforeend', data.title);
-    container.appendChild(card)
-    card.appendChild(newlink)
+    container.appendChild(link)
+    link.appendChild(card)
 } 
 
-async function fetchTitleById(id){
-    let rep = await fetch(`${URL}/${id}`);
-    let response = await rep.json();
-    createCard(response)
-    return response;
+function description(response) {
+    const description = document.createElement('div');
+    description.setAttribute('class', 'description');
+    const text = document.createElement('p')
+    text.insertAdjacentText('beforeend', response.description)
+
+    container.appendChild(description)
+    description.appendChild(text)
 }
 
 
