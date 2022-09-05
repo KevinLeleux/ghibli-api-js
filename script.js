@@ -18,7 +18,7 @@ const URL = "https://ghibliapi.herokuapp.com/films";
 //Generate home page with all the movies (cards)
 async function fetchTitles() {
     const data = await fetch(URL).then(res => res.json());
-    data.forEach(createCard);
+    data.forEach(card);
 }
 //Generate movie page with description and infos
 async function fetchTitleById(id){
@@ -30,10 +30,9 @@ async function fetchTitleById(id){
 async function fetchPeopleById(id) {
     const rep = await fetch(`https://ghibliapi.herokuapp.com/people/${id}`);
     const response = await rep.json();
-    console.log(response.name)
 }
 
-function createCard(data) {
+function card(data) {
     //create link with movie id
     const link = document.createElement('a');
     link.setAttribute('href', "?id="+data.id);
@@ -45,6 +44,17 @@ function createCard(data) {
 } 
 
 function description(response) {
+    const title = document.createElement('div');
+    title.setAttribute('class', 'title');
+    const textTitle = document.createElement('p')
+    textTitle.insertAdjacentText('beforeend', response.title)
+
+    container.appendChild(title)
+    title.appendChild(textTitle)
+    const card = document.createElement('div');
+    card.setAttribute('class', 'img');
+    card.setAttribute('style', `background-image: url(${response.image})`); 
+    container.appendChild(card)
     const description = document.createElement('div');
     description.setAttribute('class', 'description');
     const text = document.createElement('p')
@@ -62,16 +72,21 @@ function people(response) {
     people.appendChild(list)
     response.people.forEach(function(element) {
         var peopleId = element.replace('https://ghibliapi.herokuapp.com/people/','');
-        console.log(peopleId);
-        fetchPeopleById(peopleId);
         const listA = document.createElement('li');
         const link = document.createElement('a');
-        link.setAttribute('href', "?people="+peopleId);
-        link.insertAdjacentText('beforeend', response)
-        list.appendChild(listA)
-        listA.appendChild(link)
+        if(peopleId){
+            link.setAttribute('href', "?people="+peopleId);
+            fetch(`https://ghibliapi.herokuapp.com/people/${peopleId}`).then(rep => rep.json()).then(data => link.insertAdjacentText('beforeend', data.name))
+            fetchPeopleById(peopleId);
+            list.appendChild(listA)
+            listA.appendChild(link)
+            }
     })
 }
+
+
+
+
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
