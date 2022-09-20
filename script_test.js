@@ -31,13 +31,17 @@ function card(movie) {
 
 async function fetchMoviesById(id){
     const rep = await (await fetch(`${URL}/films/${id}`)).json();
+    const peoples = rep.people;
     const title = document.createElement('h1')
     title.insertAdjacentText('beforeend', rep.title)
     container.appendChild(title)
+    const original_title = document.createElement('h2')
+    original_title.insertAdjacentText('beforeend', rep.original_title)
+    container.appendChild(original_title)
     const description = document.createElement('p')
     description.insertAdjacentText('beforeend', rep.description)
     container.appendChild(description)
-    const peoples = rep.people;
+    console.log(rep)
     if (peoples == 'https://ghibliapi.herokuapp.com/people/') {
         const data = false
         return data
@@ -53,7 +57,7 @@ function description(data) {
     if (data != false){
         const people = document.createElement('div');
         const list = document.createElement('ul')
-        const title = document.createElement('h2')
+        const title = document.createElement('h3')
         title.insertAdjacentText('beforeend', "Peoples :")
         people.setAttribute('class', 'people');
         container.appendChild(people)
