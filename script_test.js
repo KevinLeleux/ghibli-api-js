@@ -30,18 +30,43 @@ function card(movie) {
 }
 
 async function fetchMoviesById(id){
-    const rep = await fetch(`${URL}/films/${id}`).then(rep => rep.json());
-    console.log(rep)
+    const rep = await (await fetch(`${URL}/films/${id}`)).json();
+    const title = document.createElement('h1')
+    title.insertAdjacentText('beforeend', rep.title)
+    container.appendChild(title)
+    const description = document.createElement('p')
+    description.insertAdjacentText('beforeend', rep.description)
+    container.appendChild(description)
     const peoples = rep.people;
-    const resutl = Promise.all()
-    for (let i in peoples) {
-        fetchPeoples(peoples[i]);
+    if (peoples == 'https://ghibliapi.herokuapp.com/people/') {
+        const data = false
+        return data
+    } else {
+    const data = Promise.all(
+        peoples.map(async (i) => await ( await fetch(i)).json())
+    )
+    return data
     }
 }
 
-async function fetchPeoples(peoples){
-    const rep = await fetch(peoples).then(rep => rep.json());
-    
+function description(data) {
+    if (data != false){
+        const people = document.createElement('div');
+        const list = document.createElement('ul')
+        const title = document.createElement('h2')
+        title.insertAdjacentText('beforeend', "Peoples :")
+        people.setAttribute('class', 'people');
+        container.appendChild(people)
+        people.appendChild(title)
+        people.appendChild(list)
+        data.forEach(i => {
+            const listA = document.createElement('li');
+            const link = document.createElement('a');
+            link.setAttribute('href', "?people="+i.id);
+            link.insertAdjacentText('beforeend', i.name)
+            list.appendChild(listA)
+            listA.appendChild(link)
+    });}
 }
 
 
@@ -49,7 +74,7 @@ const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 
 if (id) {
-    fetchMoviesById(id);
+    fetchMoviesById(id).then(data => description(data))
 } else {
     fetchMovies();
 }
