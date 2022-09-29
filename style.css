@@ -10,7 +10,7 @@
     margin-right: auto;
 }
 
-.container-card {
+.container {
     display: flex;
     flex-flow: wrap row;
     justify-content: center;
