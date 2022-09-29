@@ -32,16 +32,20 @@ function card(movie) {
 async function fetchMoviesById(id){
     const rep = await (await fetch(`${URL}/films/${id}`)).json();
     const peoples = rep.people;
-    const title = document.createElement('h1')
-    title.insertAdjacentText('beforeend', rep.title)
-    container.appendChild(title)
-    const original_title = document.createElement('h2')
-    original_title.insertAdjacentText('beforeend', rep.original_title)
-    container.appendChild(original_title)
-    const description = document.createElement('p')
-    description.insertAdjacentText('beforeend', rep.description)
-    container.appendChild(description)
-    console.log(rep)
+    const title = document.createElement('h1');
+    title.insertAdjacentText('beforeend', rep.title);
+    container.appendChild(title);
+    const original_title = document.createElement('h2');
+    original_title.insertAdjacentText('beforeend', rep.original_title + "("+rep.original_title_romanised+")");
+    container.appendChild(original_title);
+    const description = document.createElement('p');
+    description.insertAdjacentText('beforeend', rep.description);
+    container.appendChild(description);
+    console.log(rep);
+    console.log(rep.release_date);
+    console.log(rep.running_time);
+    console.log(rep.producer);
+    console.log(rep.director);
     if (peoples == 'https://ghibliapi.herokuapp.com/people/') {
         const data = false
         return data
