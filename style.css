@@ -14,8 +14,8 @@
     display: flex;
     flex-flow: wrap row;
     justify-content: center;
-    
 }
+
 .card {
     /*border-radius: 10px;*/
     margin: 1em;
@@ -23,8 +23,6 @@
     height: 30em;
     background-repeat: no-repeat;
     background-size: cover;
-
-
 }
 
 .img {
@@ -33,7 +31,8 @@
     height: 15em;
 }
 
-h1, h2 {
+h1,
+h2 {
     padding: 10px;
     text-align: center;
 }
